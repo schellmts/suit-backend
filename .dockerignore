@@ -1,0 +1,6 @@
+/app/vendor/
+/node_modules/
+.env
+.git
+Dockerfile
+.dockerignore
