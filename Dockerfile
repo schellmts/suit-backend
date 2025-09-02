@@ -4,24 +4,23 @@ FROM php:8.2-fpm
 # Define o diretório de trabalho dentro do contêiner.
 WORKDIR /var/www/html
 
-# Instala as dependências do sistema e as extensões PHP em um único passo para otimizar as camadas.
+# Instala as dependências do sistema e as extensões PHP essenciais para a aplicação.
 RUN apt-get update && apt-get install -y \
     # Dependências do sistema para Nginx e utilitários
-    nginx \
-    git \
-    curl \
-    zip \
-    unzip \
-    # Dependências do sistema para compilar extensões PHP
-    build-essential \
+    nginx git curl zip unzip \
+    # Bibliotecas do sistema necessárias para compilar as extensões PHP
+    libpq-dev \
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
     libonig-dev \
     libexif-dev \
-    # Configura e instala as extensões PHP
+    # Instala a extensão do Redis
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    # Configura e instala as outras extensões necessárias
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd pdo_mysql mbstring exif pcntl bcmath \
+    && docker-php-ext-install -j$(nproc) gd pdo_pgsql mbstring exif pcntl bcmath \
     # Limpa o cache para manter a imagem menor
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
