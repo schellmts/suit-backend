@@ -26,7 +26,7 @@ COPY . .
 
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY docker/start.sh /usr/local/bin/start.sh
+COPY docker/nginx/start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
 RUN composer install --no-interaction --no-plugins --no-scripts --no-dev --optimize-autoloader
