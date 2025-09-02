@@ -9,14 +9,11 @@ RUN apt-get update && apt-get install -y \
     nginx \
     zip \
     unzip \
-    libpq-dev \      # Dependência para a extensão PostgreSQL (pdo_pgsql)
-    libonig-dev \    # Dependência para a extensão mbstring
-    # Instala a extensão do Redis
+    libpq-dev \
+    libonig-dev \
     && pecl install redis \
     && docker-php-ext-enable redis \
-    # Instala as outras extensões PHP essenciais para o Laravel
     && docker-php-ext-install pdo_pgsql mbstring bcmath \
-    # Limpa o cache para manter a imagem final menor
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instala o Composer globalmente.
