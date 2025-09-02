@@ -39,7 +39,7 @@ COPY docker/start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
 # Instala as dependências do projeto com o Composer, otimizado para produção.
-RUN composer install --no-interaction --no-plugins --no-scripts --no-dev --optimize-autoloader
+RUN composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
 
 # Ajusta as permissões das pastas de storage e cache do Laravel.
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
